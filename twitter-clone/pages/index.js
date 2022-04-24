@@ -29,7 +29,7 @@ export default function Home(props) {
           {/* Actual UI */}
 
 
-          <HStack align={"space-between"} width="100%">
+          <HStack alignItems={"space-between"} width="100%">
             <SideNav />
 
                 <TweetFeed heading="Following Feed" tweets={props.timeline.tweets}></TweetFeed>
