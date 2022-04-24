@@ -1,4 +1,5 @@
-import { Box, Text, Heading, Image, VStack, HStack, IconButton, Avatar } from "@chakra-ui/react"
+import { HamburgerIcon } from "@chakra-ui/icons";
+import { Box, Text, Heading, Image, VStack, HStack, IconButton, Avatar, Center } from "@chakra-ui/react"
 import Tweet from "./tweet";
 /// Gets twitter feed JSON objecct, and renders out alist of tweets
 export default function TweetFeed(props) {
@@ -6,10 +7,14 @@ export default function TweetFeed(props) {
     console.log(props);
     return (
         <VStack>
-            { props.tweets.map((tweet) => (<Tweet key={tweet.post_id} {...tweet}></Tweet>))}
-             
-             {/* {props} */}
-            {/* <Tweet {...tweet_data}></Tweet> */}
+            <HStack bgColor={"gray.100"} width="100%">
+
+
+                <Heading padding={".1em"}>{props.heading}</Heading>
+
+                {/* <HamburgerIcon/> */}
+            </HStack>
+            {props.tweets.map((tweet) => (<Tweet key={tweet.post_id} {...tweet}></Tweet>))}
         </VStack>
     );
 }
