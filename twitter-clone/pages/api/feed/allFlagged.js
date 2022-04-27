@@ -16,4 +16,11 @@ export default function handler(req, res) {
             res.send(result);
         }
     });
+    // res.send( {
+    //         name: "Dan Abrahmov",
+    //         avatar_link:"https://bit.ly/dan-abramov",
+    //         tweet: "Hello father",
+    //         timestamp: "5:39PM",
+    //         flagged: false
+    //     });
 }
