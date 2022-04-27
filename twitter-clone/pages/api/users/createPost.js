@@ -16,7 +16,7 @@ export default function handler(req,res) {
     const timeStamp = req.body.timeStamp;
     
 
-    db.query("INSERT INTO user (PostId,UserId,PostText,Likes,TimeStamp) VALUES (?,?,?,?,?)", 
+    db.query("INSERT INTO post (PostId,UserId,PostText,Likes,TimeStamp) VALUES (?,?,?,?,?)", 
     [postId,userId,postText,likes,timeStamp],
     (err, result) => {
         if (err){
