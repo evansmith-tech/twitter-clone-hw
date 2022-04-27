@@ -10,7 +10,7 @@ const db = mysql.createConnection({
 // POST request
 export default function handler(req,res) {
     const postId = req.body.postId
-    db.query("DELETE From post where postId=?;",[postId], (err, result) => {
+    db.query("UPDATE post SET Likes=Likes+1 WHERE postId=?;",[postId], (err, result) => {
         if (err) {
             console.log(err);
         } else {
