@@ -14,7 +14,7 @@ export default function TweetFeed(props) {
 
                 {/* <HamburgerIcon/> */}
             </HStack>
-            {props.tweets.map((tweet) => (<Tweet key={tweet.post_id} {...tweet}></Tweet>))}
+            {props.tweets.map((tweet) => (<Tweet key={tweet.post_id} {...tweet} />))}
         </VStack>
     );
 }
