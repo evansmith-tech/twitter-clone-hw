@@ -3,7 +3,8 @@ const db = mysql.createConnection({
     user: "root",
     host: "localhost",
     password: "password",
-    database: "twitter_clone",
+    port:3306,
+    database: "TwitterClone",
 })
 
 
@@ -12,8 +13,8 @@ export default function handler(req,res) {
     const UserId = req.body.UserId;
     const PostText = req.body.PostText;
 
-    db.query("INSERT INTO post (PostId, UserId, PostText, Likes) VALUES (?,?,?,?)", 
-    [nil, UserId, PostText, 0],
+    db.query("INSERT INTO post (UserId, PostText, Likes) VALUES (?,?,?)", 
+    [UserId, PostText, 0],
     (err, result) => {
         if (err){
             console.log(err);

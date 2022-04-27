@@ -3,7 +3,8 @@ const db = mysql.createConnection({
     user: "root",
     host: "localhost",
     password: "password",
-    database: "twitter_clone",
+    port:3306,
+    database: "TwitterClone",
 })
 
 

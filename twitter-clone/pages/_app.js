@@ -5,7 +5,6 @@ import { useState } from "react";
 
 // Chakra used for lots of UI work, leave provider there. Can wrap any other provider components
 // around it though.
-
 const addUser = () => {
   Axios.post("localhost:3000/createUser", {
     firstName: firstName, 

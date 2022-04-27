@@ -1,5 +1,5 @@
 
-INSERT INTO comment (CommentId,PostId,UserId,CommentText) VALUES (1,1,4,"");
+
 
 INSERT INTO follows (User1Id,User2Id) VALUES (1,2);
 INSERT INTO follows (User1Id,User2Id) VALUES (2,1);
@@ -13,3 +13,4 @@ INSERT INTO post (PostId,UserId,PostText,Likes,Timestamp) VALUES (2,4,"Welcome!"
 INSERT INTO user (UserId,FirstName,LastName,Password,IsAdmin) VALUES (1,'John','Doe','password',false);
 INSERT INTO user (UserId,FirstName,LastName,Password,IsAdmin) VALUES (2,'James','Delroy','password1',false);
 INSERT INTO user (UserId,FirstName,LastName,Password,IsAdmin) VALUES (3,'Jamie','Flake','password2',true);
+INSERT INTO comment (Text,PostId,UserId) VALUES ("This is a test",4,1);
