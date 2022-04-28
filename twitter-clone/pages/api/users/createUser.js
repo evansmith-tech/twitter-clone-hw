@@ -10,19 +10,21 @@ const db = mysql.createConnection({
 
 // POST request
 export default function handler(req,res) {
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const password = req.body.password;
-    const isAdmin = req.body.isAdmin;
+    const firstName = req.body.firstName;// tested with Boby
+    const lastName = req.body.lastName;//tested with Jonson
+    const password = req.body.password;//tested with password
+    const isAdmin = req.body.isAdmin;//tested with false
 
-    db.query("INSERT INTO user (UserId, FirstName, LastName, Password, IsAdmin) VALUES (?,?,?,?,?)", 
-    [nil, firstName, lastName, password, isAdmin],
+    db.query("INSERT INTO user (FirstName, LastName, Password, IsAdmin) VALUES (?,?,?,?)", 
+    [firstName, lastName, password, isAdmin],
     (err, result) => {
         if (err){
             console.log(err);
         }else{
-            print(result);
+            
             res.send("Success");
+            console.log("Success");
+ 
         }
     }
     );
