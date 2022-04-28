@@ -10,9 +10,9 @@ const db = mysql.createConnection({
 
 // POST request
 export default function handler(req,res) {
-    const postId = req.body.postId;
-    const userId = req.body.userId;
-    const commentText = req.body.commentText;
+    const postId = req.body.postId; //tested with value 1
+    const userId = req.body.userId; //tested with value 1
+    const commentText = req.body.commentText; //tested with "Goodmoring"
     
 
     db.query("INSERT INTO comment (Text,PostId,UserId) VALUES (?,?,?)", 
@@ -21,8 +21,8 @@ export default function handler(req,res) {
         if (err){
             console.log(err);
         }else{
-            print(result);
             res.send("Success");
+            console.log("Success")
         }
     }
     );

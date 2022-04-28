@@ -10,17 +10,19 @@ const db = mysql.createConnection({
 
 // POST request
 export default function handler(req,res) {
-    const UserId = req.body.UserId;
-    const PostText = req.body.PostText;
-
-    db.query("INSERT INTO post (UserId, PostText, Likes) VALUES (?,?,?)", 
-    [UserId, PostText, 0],
+    const UserId =req.body.UserId;//tested with 106
+    const PostText = req.body.PostText;//tested with "B.O.B BoddyRay"
+    const Timestamp =req.body.Timestamp;//tested with Timestamp="2022-04-25 20:00:58"
+    
+    db.query("INSERT INTO post (UserId, PostText, Likes,Timestamp) VALUES (?,?,?,?)", 
+    [UserId,PostText, 0,Timestamp],
     (err, result) => {
         if (err){
             console.log(err);
         }else{
-            print(result);
+            
             res.send("Success");
+            console.log("Success");
         }
     }
     );

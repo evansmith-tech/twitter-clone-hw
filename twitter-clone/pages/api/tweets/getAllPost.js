@@ -15,6 +15,7 @@ export default function handler(req,res) {
             console.log(err);
         } else {
             res.send(result);
+            console.log("Success");
         }
     });
 }

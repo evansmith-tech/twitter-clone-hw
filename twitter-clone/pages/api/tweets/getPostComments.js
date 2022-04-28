@@ -10,12 +10,13 @@ const db = mysql.createConnection({
 
 // POST request
 export default function handler(req,res) {
-    const userId = req.body.userId
-    db.query("SELECT * FROM comment WHERE PostId = ?;", [userId], (err, result) => {
+    const PostId = req.body.postId//test with value 1
+    db.query("SELECT * FROM comment WHERE PostId = ?;", [PostId], (err, result) => {
         if (err) {
             console.log(err);
         } else {
             res.send(result);
+            console.log("Success");
         }
     });
 }
