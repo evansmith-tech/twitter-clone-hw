@@ -1,8 +1,8 @@
 
 import { Box, Heading, HStack, Text, VStack, Flex, Center, Button, Input, IconButton } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import SideNav from '../components/sideNav';
-import TweetFeed from '../components/tweetFeed';
+import SideNav from '../../components/sideNav';
+import TweetFeed from '../../components/tweetFeed';
 export default function UserPage(props) {
 
     const [userState, changeUserInfo] = useState(props.user);
