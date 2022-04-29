@@ -10,7 +10,7 @@ const db = mysql.createConnection({
 
 // POST request
 export default function handler(req,res) {
-    const CommentId = 2;//req.body.CommentId
+    const CommentId =req.body.CommentId
     db.query("DELETE From comment where CommentId=?;",[CommentId], (err, result) => {
         if (err) {
             console.log(err);
