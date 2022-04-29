@@ -19,15 +19,23 @@ export default function Home(props) {
     state: null // todo should i change this
     , IsAdmin: false
   })
+  const [userID, setName] = React.useState('');
+    const handleChangeName = (event) => setName(event.target.value);
 
-  const signIn = function signIn() {
+    const [password, setPassword] = React.useState('');
+    const handleChangePassword = (event) => setPassword(event.target.value);
+
+  const signIn = async function signIn() {
     // todo sign in logic
     // check to see if user exists
     // then login 
-
-    let user = {
-      IsAdmin: true
-    }; // todo make the call
+    // const name_arr = userID.split(" ");
+    let res = await fetch(`http://localhost:3000/api/users/${UserID}`);
+    let data = await res.json();
+    if (data == []) {
+      return;
+    }
+    let user = data;
 
     changeUserInfo(user); //
     changeSignInState(true);
@@ -47,6 +55,8 @@ export default function Home(props) {
     changeSignInState(false);
   }
 
+  
+
   console.log(props);
   return (
     <html>
@@ -63,8 +73,8 @@ export default function Home(props) {
             {/* Sign in form  */}
             {isSignedin ? <Button colorScheme={"twitter"} onClick={signOut}>Sign Out</Button> :
               <HStack>
-                <Input placeholder="email" type="email"></Input>
-                {/* <Input placeholder="passwd" type="password"></Input> */}
+                <Input value={userID} onChange={handleChangeName} placeholder="UserId" type="text"></Input>
+                <Input value={password} onChange={handleChangePassword} placeholder="" type="password"></Input>
                 <Button colorScheme="twitter" onClick={signIn}>Sign In</Button>
               </HStack>
             }
