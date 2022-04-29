@@ -30,7 +30,7 @@ export default function Home(props) {
     // check to see if user exists
     // then login 
     // const name_arr = userID.split(" ");
-    let res = await fetch(`http://localhost:3000/api/users/${UserID}`);
+    let res = await fetch(`http://localhost:3000/api/users/${userID}`);
     let data = await res.json();
     if (data == []) {
       return;
