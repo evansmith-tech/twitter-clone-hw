@@ -11,7 +11,7 @@ const db = mysql.createConnection({
 
 // POST request
 export default function handler(req,res) {
-    db.query("SELECT *FROM post ORDER BY timestamp DESC;", (err, result) => {
+    db.query("SELECT u.FirstName as FirstName, u.LastName as LastName, p.UserId as UserId, p.PostID as PostID, p.PostText as PostText, p.Likes as Likes, p.Timestamp as Timestamp, p.flagged as flagged FROM post p, user u ORDER BY timestamp DESC;", (err, result) => {
         if (err) {
             console.log(err);
         } else {
