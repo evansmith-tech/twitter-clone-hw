@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `TwitterClone`.`Post` (
   `Likes` INT NOT NULL,
   `Timestamp` DATETIME NOT NULL,
   `UserId` INT NOT NULL,
+  `flagged` TINYINT NULL,
   PRIMARY KEY (`PostID`))
 ENGINE = InnoDB;
 
