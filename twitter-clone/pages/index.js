@@ -8,6 +8,7 @@ import Tweet from '../components/tweet';
 import TweetFeed from '../components/tweetFeed';
 // import styles from '../styles/Home.module.css'
 import React, { useState } from 'react';
+import PeopleList from '../components/people';
 
 /// Home page
 export default function Home(props) {
@@ -38,7 +39,8 @@ export default function Home(props) {
     // then login 
 
     let user = {
-      IsAdmin: false
+      IsAdmin: false,
+      state:null
     }; // todo make the call
 
     changeUserInfo(user); // load in user info
@@ -77,10 +79,14 @@ export default function Home(props) {
               isSignedin ?
                 <TweetFeed auth={userState} heading="Following Feed" tweets={props.timeline.tweets}></TweetFeed> : <Box />
             }
-            <TweetFeed auth={userState} heading="Global Feed" tweets={props.timeline.tweets}></TweetFeed>
+            <VStack>
+
+              <TweetFeed auth={userState} heading="Global Feed" tweets={props.timeline.tweets}></TweetFeed>
+              <PeopleList auth={userState} heading="People" people={props.people} />
+            </VStack>
 
           </HStack>
-          7
+
         </VStack>
       </body>
     </html>
@@ -115,9 +121,16 @@ export async function getServerSideProps() {
             Likes: 0,
             postId: 2
           }
-        ],
+        ]        
+      },
+      people: [
+        {
+          UserId: "1" // todo confirm schema,
+          , FirstName: "Evan1",
+          LastName: "SMith1"
+        }
 
-      }
+      ]
     }
   };
 }
