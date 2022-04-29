@@ -3,7 +3,7 @@ import { Box, Heading, HStack, Text, VStack, Flex, Center, Button, Input } from 
 import React, { useState } from 'react';
 
 /// Home page
-export default function Home(props) {
+export default function CreateUser(props) {
 
 
     const [isSignedin, changeSignInState] = useState(false)
@@ -47,7 +47,7 @@ export default function Home(props) {
     const signUp = async function SignUp() {
         //todo create user using name and password
         const name_arr = name.split(" ");
-        await fetch("http://localhost:3000/api/users/createUser", {
+       let res =  await fetch("http://localhost:3000/api/users/createUser", {
             method: "POST",
             body: JSON.stringify(
                 {
@@ -58,6 +58,8 @@ export default function Home(props) {
                 }
             )
         })
+        let data = await res.json();
+        setName(data.insertId);
         console.log(name + " " + password);
     }
     console.log(props);

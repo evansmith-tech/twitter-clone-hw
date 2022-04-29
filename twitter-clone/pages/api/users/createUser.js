@@ -20,11 +20,10 @@ export default function handler(req,res) {
     (err, result) => {
         if (err){
             console.log(err);
-        }else{
-            
-            res.send("Success");
-            console.log("Success");
- 
+        }else{    
+            console.log(result);        
+            res.send(result);
+            console.log("Success"); 
         }
     }
     );
