@@ -9,7 +9,8 @@ const db = mysql.createConnection({
 
 
 export default function handler(req,res) {
-    const id = req.query;//tested with value 1
+    const {id} = req.query; //tested with value 1
+    console.log(id);
     db.query(`SELECT * FROM user WHERE UserId=${id}`, (err, result) => {
         if (err) {
             console.log(err);
