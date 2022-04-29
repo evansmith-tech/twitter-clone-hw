@@ -5,7 +5,7 @@ export default function PeopleList(props) {
     return (
         <VStack>
             <Heading>{props.heading}</Heading>
-            {props.people.map((e) => <FollowTile auth={props.auth} user={e} />)}
+            {props.people.map((e) => <FollowTile key={e.UserId} auth={props.auth} user={e} />)}
             {/* <Text>{props.people}</Text> */}
         </VStack>
     );
@@ -25,7 +25,7 @@ function FollowTile(props) {
             <Text>
                 {props.user.FirstName + " " + props.user.LastName}
             </Text>
-            <IconButton colorScheme={true ? "twitter" : ""} variant={"ghost"}  aria-label='Like' icon={<ArrowRightIcon />} />
+            {/* <IconButton colorScheme={true ? "twitter" : ""} variant={"ghost"}  aria-label='Like' icon={<ArrowRightIcon />} /> */}
         </HStack>
         );
 }

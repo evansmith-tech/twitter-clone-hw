@@ -12,7 +12,8 @@ const db = mysql.createConnection({
 export default function handler(req,res) {
     const {id} = req.query; //tested with value 1
     console.log(id);
-    db.query(`SELECT * FROM post p WHERE p.UserId=${id} IN (SELECT User2Id FROM follows WHERE User1Id=p.UserId) ORDER BY timestamp DESC;`, (err, result) => {
+    db.query(`SELECT u.FirstName as FirstName, u.LastName as LastName, p.UserId as UserId, p.PostID as PostID, p.PostText as PostText, p.Likes as Likes, p.Timestamp as Timestamp, p.flagged as flagged FROM post p, user u 
+    WHERE u.UserId in (SELECT User2Id FROM follows WHERE User1Id=${id}) ORDER BY timestamp DESC;`, (err, result) => {
         if (err) {
             console.log(err);
         } else {

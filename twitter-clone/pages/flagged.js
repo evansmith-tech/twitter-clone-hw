@@ -1,6 +1,6 @@
-import { Text, VStack } from "@chakra-ui/react";
+import { Box, Heading, HStack, Text, VStack, Flex, Center, Button, Input } from '@chakra-ui/react';
 import TweetFeed from "../components/tweetFeed";
-
+import {useState} from 'react';
 export default function FlaggedTweetsPage(props) {
 
 
@@ -57,7 +57,7 @@ export default function FlaggedTweetsPage(props) {
 
 
             <HStack alignItems={"space-between"} width="100%">
-                <SideNav />
+                {/* <SideNav /> */}
                 {/* {
               isSignedin ?
                 <TweetFeed auth={userState} heading="Following Feed" tweets={props.timeline.tweets}></TweetFeed> : <Box />

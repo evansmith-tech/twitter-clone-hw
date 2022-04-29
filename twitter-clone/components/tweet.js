@@ -58,7 +58,7 @@ export default function Tweet(props) {
                         <Avatar name={props.name} src={props.avatar_link} /> : <Box />
                     }
                     <VStack alignItems="start">
-                        <Text>{props.FirstName + " " + props.LastName}</Text>
+                        <Heading size="md" >{props.FirstName + " " + props.LastName}</Heading>
                         <Text>{props.PostText}</Text>
                     </VStack>
                 </HStack>

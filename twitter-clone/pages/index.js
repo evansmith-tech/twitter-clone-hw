@@ -19,11 +19,13 @@ export default function Home(props) {
     state: null // todo should i change this
     , IsAdmin: false
   })
-  const [userID, setName] = React.useState('');
-    const handleChangeName = (event) => setName(event.target.value);
+  const [followFeedState, changeFeedState] = useState([]);
 
-    const [password, setPassword] = React.useState('');
-    const handleChangePassword = (event) => setPassword(event.target.value);
+  const [userID, setName] = React.useState('');
+  const handleChangeName = (event) => setName(event.target.value);
+
+  const [password, setPassword] = React.useState('');
+  const handleChangePassword = (event) => setPassword(event.target.value);
 
   const signIn = async function signIn() {
     // todo sign in logic
@@ -32,13 +34,19 @@ export default function Home(props) {
     // const name_arr = userID.split(" ");
     let res = await fetch(`http://localhost:3000/api/users/${userID}`);
     let data = await res.json();
-    if (data == []) {
-      return;
-    }
-    let user = data;
+  
+    
+    console.log("USERERRR");
+    let user = data[0];
+    console.log(user);
 
-    changeUserInfo(user); //
+    changeUserInfo(user);
     changeSignInState(true);
+    let feed_res = await fetch(`http://localhost:3000/api/feed/${userID}`);
+    let feed_json = await feed_res.json();
+    // console.log(feed_json);
+    changeFeedState(feed_json);
+    // console.log(followFeedState);
   }
 
   const signOut = function signOut() {
@@ -48,27 +56,43 @@ export default function Home(props) {
 
     let user = {
       IsAdmin: false,
-      state:null
+      state: null
     }; // todo make the call
 
     changeUserInfo(user); // load in user info
     changeSignInState(false);
   }
 
-  const deleteUser =async function deleteUser() {
+  const deleteUser = async function deleteUser() {
     await fetch("http://localhost:3000/api/users/deleteUser", {
       body: JSON.stringify(
-        {userId: userID}
+        { userId: userID }
       )
     });
-    signOut();
+    await signOut();
   }
+
+  const [newPostValue, changeNewPostValue] = useState('');
+  const handleChangePost = (event) => changeNewPostValue(event.target.value);
+
+  const createPost = async function createPost() {
+    console.log(userState);
+    await fetch('http://localhost:3000/api/tweets/createPost', {
+      method: "POST",
+      body: JSON.stringify({
+        postText: newPostValue,
+        userId: userState.UserId,
+        timeStamp: "2022-04-30 10:00:58"
+      })
+    });
+  }
+
 
   console.log(props);
   return (
     <html>
       <head>
-        <title>Twitter Clone</title>
+        <title>Byte</title>
       </head>
       <body>
         <VStack width="100%" alignContent="start">
@@ -80,8 +104,8 @@ export default function Home(props) {
             {/* Sign in form  */}
             {isSignedin ? <HStack>
 
-              <Button colorScheme={"twitter"} onClick={signOut}>Sign Out</Button> 
-              <Button colorScheme={"red"} onClick={deleteUser}>Delete user</Button> 
+              <Button colorScheme={"twitter"} onClick={signOut}>Sign Out</Button>
+              <Button colorScheme={"red"} onClick={deleteUser}>Delete user</Button>
             </HStack> :
               <HStack>
                 <Input value={userID} onChange={handleChangeName} placeholder="UserId" type="text"></Input>
@@ -92,19 +116,31 @@ export default function Home(props) {
           </HStack>
 
           {/* Actual UI */}
+          {isSignedin ?
+            <HStack>
+              {/* // ! New Posts  */}
+              <Input value={newPostValue} onChange={handleChangePost} type={'text'} />
+              <Button onClick={createPost}>Add Post</Button>
+            </HStack> : <Box />
+          }
 
 
           <HStack alignItems={"space-between"} width="100%">
-            <SideNav />
+            {/* <SideNav /> */}
             {
               isSignedin ?
-                <TweetFeed auth={userState} heading="Following Feed" tweets={props.timeline.tweets}></TweetFeed> : <Box />
-            }
-            <VStack>
 
-              <TweetFeed auth={userState} heading="Global Feed" tweets={props.timeline.tweets}></TweetFeed>
-              <PeopleList auth={userState} heading="People" people={props.people} />
-            </VStack>
+                <VStack>
+
+
+
+                  <TweetFeed auth={userState} heading="Following Feed" tweets={followFeedState}></TweetFeed>
+                </VStack>
+                : <Box />
+            }
+            <TweetFeed auth={userState} heading="Global Feed" tweets={props.timelines.global}></TweetFeed>
+            <PeopleList auth={userState} heading="People" people={props.people} />
+
 
           </HStack>
 
@@ -122,14 +158,17 @@ export async function getServerSideProps() {
 
   let tweetsRes = await fetch("http://localhost:3000/api/feed/global");
   let globalData = await tweetsRes.json();
-  // console.log(globalData);
+  console.log(globalData);
+  let peopleRes = await fetch('http://localhost:3000/api/users/getUsers');
+  let peopleData = await peopleRes.json();
+  console.log(peopleData);
 
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
   return {
     props: {
-      timeline: {
-        tweets: globalData
+      timelines: {
+        global: globalData
         // tweets: [
         //   {
         //     name: "Dan Abrahmov",
@@ -146,16 +185,9 @@ export async function getServerSideProps() {
         //     Likes: 0,
         //     postId: 2
         //   }
-          
-      },
-      people: [
-        {
-          UserId: "1" // todo confirm schema,
-          , FirstName: "Evan1",
-          LastName: "SMith1"
-        }
 
-      ]
+      },
+      people: peopleData
     }
   };
 }

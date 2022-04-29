@@ -2,13 +2,13 @@ import { Box, Heading, HStack, Text, VStack, Flex, Center, Button, Input } from 
 import { ClassNames } from '@emotion/react';
 import Head from 'next/head'
 import Image from 'next/image'
-import SideNav from '../components/sideNav';
-import SignIn from '../components/signIn';
-import Tweet from '../components/tweet';
-import TweetFeed from '../components/tweetFeed';
+// import SideNav from '../components/sideNav';
+// import Tweet from '../components/tweet';
 // import styles from '../styles/Home.module.css'
 import React, { useState } from 'react';
-import PeopleList from '../components/people';
+import { useRouter } from 'next/router'
+import Tweet from '../../components/tweet';
+import CommentFeed from '../../components/commentFeed';
 
 /// Home page
 export default function Home(props) {
@@ -30,20 +30,14 @@ export default function Home(props) {
                 <title>Comment Section</title>
             </head>
             <body>
+
                 <VStack width="100%" alignContent="start">
                     {/* placeholder nav bar */}
 
                     <HStack width="100%" bgColor="blue.400" alignContent={"space-between"}>
 
                         <Heading padding={".2em .3em"} textColor="white">Comment</Heading>
-                        <Tweet auth={props.auth} key={props.tweet.post_id} {...props.tweet} />
-                        <HStack>
 
-                            <Input value={newCommentValue} onChange={handleChangeComment} type={'text'} />
-                            <Button style={'twitter'} onClick={createComment}>Add Comment</Button>
-                        </HStack>
-
-                        <CommentFeed comments={props.comments}/>
                         {/* Sign in form  */}
                         {/* {isSignedin ? <HStack>
 
@@ -61,19 +55,20 @@ export default function Home(props) {
                     {/* Actual UI */}
 
 
-                    <HStack alignItems={"space-between"} width="100%">
-                        <SideNav />
-                        {/* {
-              isSignedin ?
-                <TweetFeed auth={userState} heading="Following Feed" tweets={props.timeline.tweets}></TweetFeed> : <Box />
-            }
-            <VStack>
+                    {/* <HStack alignItems={"space-between"} width="100%">
+                     */}
+                    <Tweet auth={props.auth} key={props.tweet.post_id} {...props.tweet} />
+                    <HStack>
 
-              <TweetFeed auth={userState} heading="Global Feed" tweets={props.timeline.tweets}></TweetFeed>
-              <PeopleList auth={userState} heading="People" people={props.people} />
-            </VStack> */}
-
+                        <Input value={newCommentValue} onChange={handleChangeComment} type={'text'} />
+                        <Button style={'twitter'} onClick={createComment}>Add Comment</Button>
                     </HStack>
+                    {props.comments == [] ?
+                        <Text>No comments :(</Text>
+                        : <CommentFeed comments={props.comments} />
+                    }
+
+                    {/* </HStack> */}
 
                 </VStack>
             </body>
@@ -82,24 +77,33 @@ export default function Home(props) {
 }
 
 // This function gets called at build time
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
     // Call an external API endpoint to get posts
     // const res = await fetch('https://.../posts')
     // const posts = await res.json()
+    // const router = useRouter();
+    const { id } = context.params;
+    let res_tweet = await fetch(`http://localhost:3000/api/tweets/${id}`);
+    let resData = await res_tweet.json();
 
+    let res_comment = await fetch(`http://localhost:3000/api/comments/getPostComments`, {
+        method: "POST",
+        body: JSON.stringify({
+            postId: id
+        })
+    });
+
+    let comment_data = await res_comment.json();
+    console.log(resData);
     // By returning { props: { posts } }, the Blog component
     // will receive `posts` as a prop at build time
     return {
         props: {
-            tweet: {
-
+            auth: {
+                IsAdmin: false
             },
-            comments: [
-                {
-                    FirstName: "Evan",
-                    text: "Comment"
-                }
-            ]
+            tweet: resData,
+            comments: comment_data
         }
     };
 }
