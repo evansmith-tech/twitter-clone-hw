@@ -1,4 +1,4 @@
-import { Box, Heading, HStack, Text, VStack, Flex, Center } from '@chakra-ui/react';
+import { Box, Heading, HStack, Text, VStack, Flex, Center, Button, Input } from '@chakra-ui/react';
 import { ClassNames } from '@emotion/react';
 import Head from 'next/head'
 import Image from 'next/image'
@@ -7,9 +7,44 @@ import SignIn from '../components/signIn';
 import Tweet from '../components/tweet';
 import TweetFeed from '../components/tweetFeed';
 // import styles from '../styles/Home.module.css'
+import React, { useState } from 'react';
 
 /// Home page
 export default function Home(props) {
+
+
+  const [isSignedin, changeSignInState] = useState(false)
+  const [userState, changeUserInfo] = useState({
+    state: null // todo should i change this
+    , IsAdmin: false
+  })
+
+  const signIn = function signIn() {
+    // todo sign in logic
+    // check to see if user exists
+    // then login 
+
+    let user = {
+      IsAdmin: true
+    }; // todo make the call
+
+    changeUserInfo(user); //
+    changeSignInState(true);
+  }
+
+  const signOut = function signOut() {
+    // todo sign in logic
+    // check to see if user exists
+    // then login 
+
+    let user = {
+      IsAdmin: false
+    }; // todo make the call
+
+    changeUserInfo(user); // load in user info
+    changeSignInState(false);
+  }
+
   console.log(props);
   return (
     <html>
@@ -19,11 +54,18 @@ export default function Home(props) {
       <body>
         <VStack width="100%" alignContent="start">
           {/* placeholder nav bar */}
-          
-            <HStack width="100%" bgColor="blue.400" alignContent={"space-between"}>
+
+          <HStack width="100%" bgColor="blue.400" alignContent={"space-between"}>
 
             <Heading padding={".2em .3em"} textColor="white">Twitter Clone</Heading>
-          <SignIn />
+            {/* Sign in form  */}
+            {isSignedin ? <Button colorScheme={"twitter"} onClick={signOut}>Sign Out</Button> :
+              <HStack>
+                <Input placeholder="email" type="email"></Input>
+                {/* <Input placeholder="passwd" type="password"></Input> */}
+                <Button colorScheme="twitter" onClick={signIn}>Sign In</Button>
+              </HStack>
+            }
           </HStack>
 
           {/* Actual UI */}
@@ -31,12 +73,14 @@ export default function Home(props) {
 
           <HStack alignItems={"space-between"} width="100%">
             <SideNav />
+            {
+              isSignedin ?
+                <TweetFeed auth={userState} heading="Following Feed" tweets={props.timeline.tweets}></TweetFeed> : <Box />
+            }
+            <TweetFeed auth={userState} heading="Global Feed" tweets={props.timeline.tweets}></TweetFeed>
 
-                <TweetFeed heading="Following Feed" tweets={props.timeline.tweets}></TweetFeed>
-                <TweetFeed heading="Global Feed" tweets={props.timeline.tweets}></TweetFeed>
-           
           </HStack>
-
+          7
         </VStack>
       </body>
     </html>
@@ -61,13 +105,15 @@ export async function getServerSideProps() {
             avatar_link: "https://bit.ly/dan-abramov",
             tweet: "This is my tweet content!",
             timestamp: "5:39PM",
-            post_id: 1
+            Likes: 0,
+            postId: 1
           }, {
             name: "Evan Smith",
             avatar_link: "https://bit.ly/dan-abramov",
             tweet: "This is my tweet againnnn!",
             timestamp: "6:39PM",
-            post_id: 2
+            Likes: 0,
+            postId: 2
           }
         ],
 
