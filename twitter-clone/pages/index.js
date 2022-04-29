@@ -120,29 +120,33 @@ export async function getServerSideProps() {
   // const res = await fetch('https://.../posts')
   // const posts = await res.json()
 
+  let tweetsRes = await fetch("http://localhost:3000/api/feed/global");
+  let globalData = await tweetsRes.json();
+  // console.log(globalData);
+
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
   return {
     props: {
       timeline: {
-
-        tweets: [
-          {
-            name: "Dan Abrahmov",
-            avatar_link: "https://bit.ly/dan-abramov",
-            tweet: "This is my tweet content!",
-            timestamp: "5:39PM",
-            Likes: 0,
-            postId: 1
-          }, {
-            name: "Evan Smith",
-            avatar_link: "https://bit.ly/dan-abramov",
-            tweet: "This is my tweet againnnn!",
-            timestamp: "6:39PM",
-            Likes: 0,
-            postId: 2
-          }
-        ]        
+        tweets: globalData
+        // tweets: [
+        //   {
+        //     name: "Dan Abrahmov",
+        //     avatar_link: "https://bit.ly/dan-abramov",
+        //     tweet: "This is my tweet content!",
+        //     timestamp: "5:39PM",
+        //     Likes: 0,
+        //     postId: 1
+        //   }, {
+        //     name: "Evan Smith",
+        //     avatar_link: "https://bit.ly/dan-abramov",
+        //     tweet: "This is my tweet againnnn!",
+        //     timestamp: "6:39PM",
+        //     Likes: 0,
+        //     postId: 2
+        //   }
+          
       },
       people: [
         {

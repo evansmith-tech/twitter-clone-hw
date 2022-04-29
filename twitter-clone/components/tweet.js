@@ -14,17 +14,17 @@ export default function Tweet(props) {
     
     const retweet = async function retweet() {
         //! this doesn't unretweet the likes serverside
-        await fetch("http://localhost:3000/api/tweets/retweet", {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                postId: props.postId,
-                userId: 123 // todo AUTH comeback and swap this for the user ID determined at runtime
-            })
-        });
+        // await fetch("http://localhost:3000/api/tweets/retweet", {
+        //     method: "POST",
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         postId: props.PostId,
+        //         userId: 123 // todo AUTH comeback and swap this for the user ID determined at runtime
+        //     })
+        // });
         change_retweet_btn_state(!isRetweeted); // whatever the curernt state is, we flip it
     }
     const like = async function like() {
@@ -36,7 +36,7 @@ export default function Tweet(props) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                postId: props.postId
+                postId: props.PostID
             })
         });
         change_like_btn_state(!isLiked); // whatever the current state is, we flip it
@@ -58,8 +58,8 @@ export default function Tweet(props) {
                         <Avatar name={props.name} src={props.avatar_link} /> : <Box />
                     }
                     <VStack alignItems="start">
-                        <Text>{props.name} {props.timestamp}</Text>
-                        <Text>{props.tweet}</Text>
+                        <Text>{props.FirstName + " " + props.LastName}</Text>
+                        <Text>{props.PostText}</Text>
                     </VStack>
                 </HStack>
                 <HStack alignContent="space-between">
