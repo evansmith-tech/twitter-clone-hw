@@ -55,7 +55,14 @@ export default function Home(props) {
     changeSignInState(false);
   }
 
-  
+  const deleteUser =async function deleteUser() {
+    await fetch("http://localhost:3000/api/users/deleteUser", {
+      body: JSON.stringify(
+        {userId: userID}
+      )
+    });
+    signOut();
+  }
 
   console.log(props);
   return (
@@ -71,7 +78,11 @@ export default function Home(props) {
 
             <Heading padding={".2em .3em"} textColor="white">Twitter Clone</Heading>
             {/* Sign in form  */}
-            {isSignedin ? <Button colorScheme={"twitter"} onClick={signOut}>Sign Out</Button> :
+            {isSignedin ? <HStack>
+
+              <Button colorScheme={"twitter"} onClick={signOut}>Sign Out</Button> 
+              <Button colorScheme={"red"} onClick={deleteUser}>Delete user</Button> 
+            </HStack> :
               <HStack>
                 <Input value={userID} onChange={handleChangeName} placeholder="UserId" type="text"></Input>
                 <Input value={password} onChange={handleChangePassword} placeholder="" type="password"></Input>
