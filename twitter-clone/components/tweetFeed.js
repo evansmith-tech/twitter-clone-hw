@@ -7,7 +7,7 @@ export default function TweetFeed(props) {
     console.log("Tweets: ")
     console.log(props);
     return (
-        <VStack>
+        <VStack shadow={"lg"} rounded={"md"}>
             <HStack bgColor={"gray.100"} width="100%">
 
 
