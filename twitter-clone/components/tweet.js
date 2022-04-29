@@ -65,7 +65,7 @@ export default function Tweet(props) {
                     <IconButton colorScheme={false ? "twitter" : ""} variant={"ghost"} onClick={comment} aria-label='Comment' icon={<ChatIcon />} />
                     <IconButton colorScheme={isRetweeted ? "twitter" : ""} variant={"ghost"} onClick={retweet} aria-label='Retweet' icon={<RepeatIcon />} />
                     <IconButton colorScheme={isLiked ? "twitter" : ""} variant={"ghost"} onClick={like} aria-label='Like' icon={<CheckIcon />} />
-                    {false ? <IconButton colorScheme={"yellow"} variant={'solid'} aria-label='flag' icon={<WarningTwoIcon />}></IconButton> : <Box />}
+                    {props.auth.IsAdmin ? <IconButton colorScheme={"yellow"} variant={'solid'} aria-label='flag' icon={<WarningTwoIcon />}></IconButton> : <Box />}
                     {/* </Flex> */}
                 </HStack>
 
