@@ -1,5 +1,5 @@
 import { Box, Text, Heading, Image, VStack, HStack, IconButton, Avatar, Flex, Icon } from "@chakra-ui/react"
-import { ChatIcon, RepeatIcon, CheckIcon, WarningTwoIcon } from '@chakra-ui/icons'
+import { CloseIcon, RepeatIcon, CheckIcon, WarningTwoIcon } from '@chakra-ui/icons'
 import React, { useState } from 'react';
 export default function Tweet(props) {
 
@@ -7,9 +7,19 @@ export default function Tweet(props) {
     const [isRetweeted, change_retweet_btn_state] = useState(false)
     // const [like_count, like_count_state] = useState(props.likes)
 
-    const comment = function comment() {
-        // call the route in the comment api
-        console.log("hi")
+    const comment = async function comment() {
+       await fetch('http://localhost:3000/api/tweets/deletePost', {
+           method: "POST",
+
+               headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+           body: JSON.stringify({
+               postId: props.PostId
+           })
+       });
+
     }
     
     const retweet = async function retweet() {
@@ -65,7 +75,7 @@ export default function Tweet(props) {
                 <HStack alignContent="space-between">
                     {/* <Flex> */}
 
-                    <IconButton colorScheme={false ? "twitter" : ""} variant={"ghost"} onClick={comment} aria-label='Comment' icon={<ChatIcon />} />
+                    <IconButton colorScheme={false ? "twitter" : ""} variant={"ghost"} onClick={comment} aria-label='Delete' icon={<CloseIcon />} />
                     <IconButton colorScheme={isRetweeted ? "twitter" : ""} variant={"ghost"} onClick={retweet} aria-label='Retweet' icon={<RepeatIcon />} />
                     <IconButton colorScheme={isLiked ? "twitter" : ""} variant={"ghost"} onClick={like} aria-label='Like' icon={<CheckIcon />} />
                     {props.auth.IsAdmin ? <IconButton colorScheme={"yellow"} variant={'solid'} aria-label='flag' icon={<WarningTwoIcon />}></IconButton> : <Box />}
