@@ -100,7 +100,7 @@ export default function Home(props) {
 
           <HStack width="100%" bgColor="blue.400" alignContent={"space-between"}>
 
-            <Heading padding={".2em .3em"} textColor="white">Twitter Clone</Heading>
+            <Heading padding={".2em .3em"} textColor="white">Byte</Heading>
             {/* Sign in form  */}
             {isSignedin ? <HStack>
 
